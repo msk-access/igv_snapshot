@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "igv-snapshot"
+version = "0.1.0"
+description = ""
+authors = ["buehlere <buehlere@mskcc.org>"]
+readme = "README.md"
+packages = [{include = "igv_snapshot"}]
+include = [
+    "data/*"
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+typer = {extras = ["all"], version = "^0.12.3"}
+pandas = "*"
+xvfbwrapper = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+igv = "igv_snapshot.main:app"
