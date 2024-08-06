@@ -150,7 +150,12 @@ def check_for_bai(bam_file):
     '''
     Check to make sure a 'file.bam.bai' file is present in the same dir as the 'file.bam' file
     '''
-    file_exists(bam_file[:-4] + '.bai', kill = True)
+    if os.path.isfile(bam_file + '.bai'):
+        return True
+    if os.path.isfile(bam_file[:-4] + '.bai'):
+        return True
+    else:
+        raise Exception(f"ERROR: Index file for '{bam_file}' does not exist!")
 
 
 def verify_input_files_list(files_list):
