@@ -11,11 +11,17 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Create directories and set permissions
+RUN mkdir -p /igv_snapshot && \
+    mkdir -p /root/.java/.userPrefs && \
+    chmod -R 777 /igv_snapshot /root/.java
+
+# Set JAVA_OPTS to specify preferences directory
+ENV JAVA_OPTS="-Djava.util.prefs.userRoot=/root/.java"
 
 # Create directories and set permissions
 RUN mkdir -p /igv_snapshot && \
     chmod -R 777 /igv_snapshot
-
 
 # Add the source code for the repo to the container
 ADD . /igv_snapshot
