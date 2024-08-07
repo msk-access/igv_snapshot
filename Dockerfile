@@ -38,3 +38,4 @@ RUN mkdir -p /igv_snapshot/java_prefs /igv_snapshot/fontconfig_cache
 ENV JAVA_OPTS="-Djava.util.prefs.userRoot=/igv_snapshot/java_prefs"
 ENV FONTCONFIG_PATH="/igv_snapshot/fontconfig_cache"
 ENV FONTCONFIG_FILE="/etc/fonts/fonts.conf"
+ENV PATH="/igv_snapshot/venv/bin:${PATH}"
