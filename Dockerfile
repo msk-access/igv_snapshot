@@ -11,6 +11,12 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+
+# Create directories and set permissions
+RUN mkdir -p /igv_snapshot && \
+    chmod -R 777 /igv_snapshot
+
+
 # Add the source code for the repo to the container
 ADD . /igv_snapshot
 
@@ -34,8 +40,7 @@ RUN cd /igv_snapshot && \
 # Create writable directories for Java preferences and fontconfig cache
 RUN mkdir -p /igv_snapshot/java_prefs /igv_snapshot/fontconfig_cache
 
-# Set environment variables for Java preferences and Fontconfig
-ENV JAVA_OPTS="-Djava.util.prefs.userRoot=/igv_snapshot/java_prefs"
-ENV FONTCONFIG_PATH="/igv_snapshot/fontconfig_cache"
-ENV FONTCONFIG_FILE="/etc/fonts/fonts.conf"
 ENV PATH="/igv_snapshot/venv/bin:${PATH}"
+
+# Set a working directory (if necessary)
+WORKDIR /igv_snapshot
