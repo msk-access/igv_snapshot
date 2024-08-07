@@ -16,6 +16,10 @@ RUN mkdir -p /igv_snapshot && \
     mkdir -p /root/.java/.userPrefs && \
     chmod -R 777 /igv_snapshot /root/.java
 
+RUN mkdir -p /home/user/.java/.userPrefs /home/user/.cache/fontconfig && \
+    chown -R user:user /home/user/.java /home/user/.cache
+
+USER user
 # Set JAVA_OPTS to specify preferences directory
 ENV JAVA_OPTS="-Djava.util.prefs.userRoot=/root/.java"
 
