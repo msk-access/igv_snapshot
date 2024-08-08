@@ -271,7 +271,8 @@ def run_IGV_script(igv_script, igv_jar, memMB, tumorid):
             '-Dapple.laf.useScreenMenuBar=true',
             '-Djava.net.preferIPv4Stack=true',
             '--module=org.igv/org.broad.igv.ui.Main',
-            '-Djava.util.prefs.userRoot=/etc/.java/.systemRoot/',
+            '-Djava.util.prefs.userRoot=/igv_snapshot/java_prefs',
+            '-Djava.util.prefs.systemRoot=/igv_snapshot/system_pref'
             '-b',
             igv_script
         ])

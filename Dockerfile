@@ -36,7 +36,7 @@ RUN cd /igv_snapshot && \
     pip install . 
 
 # Create writable directories for Java preferences and fontconfig cache
-RUN mkdir -p /igv_snapshot/java_prefs /igv_snapshot/fontconfig_cache
+RUN mkdir -p /igv_snapshot/java_prefs /igv_snapshot/system_pref
 
 ENV PATH="/igv_snapshot/venv/bin:${PATH}"
 
