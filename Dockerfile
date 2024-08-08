@@ -13,8 +13,7 @@ RUN apt-get update && \
 
 
 # Create directories and set permissions
-RUN mkdir -p /igv_snapshot /igv_snapshot/writable_igv_dir /igv_snapshot/fontconfig_cache && \
-    chmod -R 777 /igv_snapshot
+RUN mkdir -p /igv_snapshot
 
 # Add the source code for the repo to the container
 ADD . /igv_snapshot
@@ -28,8 +27,6 @@ RUN cd /igv_snapshot && \
 # IGV Arguments
 ENV IGV_LIB_DIRECTORY="/igv_snapshot/IGV_${IGV_VERSION}/lib/"
 ENV IGV_ARGS_FILE="/igv_snapshot/igv.args"
-ENV IGV_DIR="/igv_snapshot/writable_igv_dir"
-ENV FONTCONFIG_CACHE="/igv_snapshot/fontconfig_cache"
 
 # Install Python Package
 RUN cd /igv_snapshot && \
@@ -44,4 +41,5 @@ RUN mkdir -p /igv_snapshot/java_prefs /igv_snapshot/fontconfig_cache
 ENV PATH="/igv_snapshot/venv/bin:${PATH}"
 
 # Set a working directory (if necessary)
+RUN chmod -R 777 /igv_snapshot
 WORKDIR /igv_snapshot
