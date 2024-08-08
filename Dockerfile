@@ -7,24 +7,13 @@ ARG JDK_VERSION=17
 
 # Install dependencies
 RUN apt-get update && \
-    apt-get install -y wget unzip xvfb xorg openjdk-${JDK_VERSION}-jdk python3 python3-pip python3-venv && \
+    apt-get install -y wget unzip xvfb xorg openjdk-${JDK_VERSION}-jdk python3 python3-pip python3-venv fontconfig && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Create directories and set permissions
-RUN mkdir -p /igv_snapshot && \
-    mkdir -p /root/.java/.userPrefs && \
-    chmod -R 777 /igv_snapshot /root/.java
-
-RUN mkdir -p /home/user/.java/.userPrefs /home/user/.cache/fontconfig && \
-    chown -R user:user /home/user/.java /home/user/.cache
-
-USER user
-# Set JAVA_OPTS to specify preferences directory
-ENV JAVA_OPTS="-Djava.util.prefs.userRoot=/root/.java"
 
 # Create directories and set permissions
-RUN mkdir -p /igv_snapshot && \
+RUN mkdir -p /igv_snapshot /igv_snapshot/writable_igv_dir /igv_snapshot/fontconfig_cache && \
     chmod -R 777 /igv_snapshot
 
 # Add the source code for the repo to the container
@@ -39,6 +28,8 @@ RUN cd /igv_snapshot && \
 # IGV Arguments
 ENV IGV_LIB_DIRECTORY="/igv_snapshot/IGV_${IGV_VERSION}/lib/"
 ENV IGV_ARGS_FILE="/igv_snapshot/igv.args"
+ENV IGV_DIR="/igv_snapshot/writable_igv_dir"
+ENV FONTCONFIG_CACHE="/igv_snapshot/fontconfig_cache"
 
 # Install Python Package
 RUN cd /igv_snapshot && \
