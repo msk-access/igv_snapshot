@@ -263,13 +263,10 @@ def run_IGV_script(igv_script, igv_jar, memMB, tumorid):
         xvfb.extra_xvfb_args += ['+extension', 'RANDR', 'c', '20']
         java_memory = "-Xmx"+memMB+"m"
         sp.call([
-            'java',
+            '/opt/java/openjdk/bin/java',
             '-showversion',
             java_memory,
             f"--module-path={igv_lib_dir}", 
-            f"@{igv_args_file}",
-            '-Dapple.laf.useScreenMenuBar=true',
-            '-Djava.net.preferIPv4Stack=true',
             '--module=org.igv/org.broad.igv.ui.Main',
             '-b',
             igv_script

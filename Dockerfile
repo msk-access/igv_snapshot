@@ -35,7 +35,7 @@ RUN cd /igv_snapshot && \
 
 # IGV Arguments
 ENV IGV_LIB_DIRECTORY="/igv_snapshot/IGV_${IGV_VERSION}/lib/"
-ENV IGV_ARGS_FILE="/igv_snapshot/igv.args"
+ENV IGV_ARGS_FILE=""
 
 # Install Python Package
 RUN cd /igv_snapshot && \
