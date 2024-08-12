@@ -1,6 +1,6 @@
 
 # Use an official OpenJDK runtime as a parent image
-FROM eclipse-temurin:17-jdk AS base
+FROM eclipse-temurin:22-jdk AS base
 
 # For ARM64 (Apple Silicon M1)
 FROM base AS arm64
