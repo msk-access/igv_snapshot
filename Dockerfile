@@ -1,19 +1,28 @@
-# Docker container with the dependencies needed to run the IGV snapshot automator
-FROM ubuntu:latest
 
-ARG IGV_VERSION=2.18.0
-ARG IGV_VERSION_MAJOR=2.18
-ARG JDK_VERSION=17
+# Use an official OpenJDK runtime as a parent image
+FROM eclipse-temurin:17-jdk AS base
 
-# Install dependencies
+# For ARM64 (Apple Silicon M1)
+FROM base AS arm64
+RUN uname -m | grep aarch64 && echo "Running on ARM64 architecture"
+
+# For AMD64 (Linux and Intel/AMD Macs)
+FROM base AS amd64
+RUN uname -m | grep x86_64 && echo "Running on AMD64 architecture"
+
+# Default build stage
+FROM ${TARGETARCH:-amd64}
+
+
 RUN apt-get update && \
-    apt-get install -y wget unzip xvfb xorg openjdk-${JDK_VERSION}-jdk python3 python3-pip python3-venv fontconfig && \
+    apt-get install -y wget unzip xvfb xorg python3 python3-pip python3-venv && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-
-# Create directories and set permissions
+# Create directories and set variables
 RUN mkdir -p /igv_snapshot
+ARG IGV_VERSION=2.18.0
+ARG IGV_VERSION_MAJOR=2.18
 
 # Add the source code for the repo to the container
 ADD . /igv_snapshot
@@ -37,9 +46,15 @@ RUN cd /igv_snapshot && \
 
 # Create writable directories for Java preferences and fontconfig cache
 RUN mkdir -p /igv_snapshot/java_prefs /igv_snapshot/system_pref
-
 ENV PATH="/igv_snapshot/venv/bin:${PATH}"
+
+# Set up environment variables, if needed
+ENV JAVA_HOME /opt/java/openjdk
+
 
 # Set a working directory (if necessary)
 RUN chmod -R 777 /igv_snapshot
 WORKDIR /igv_snapshot
+
+# Set the default entry point to a shell
+ENTRYPOINT ["/bin/bash"]

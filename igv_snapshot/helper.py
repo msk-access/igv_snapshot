@@ -271,8 +271,6 @@ def run_IGV_script(igv_script, igv_jar, memMB, tumorid):
             '-Dapple.laf.useScreenMenuBar=true',
             '-Djava.net.preferIPv4Stack=true',
             '--module=org.igv/org.broad.igv.ui.Main',
-            '-Djava.util.prefs.userRoot=/igv_snapshot/java_prefs',
-            '-Djava.util.prefs.systemRoot=/igv_snapshot/system_pref'
             '-b',
             igv_script
         ])
@@ -348,9 +346,7 @@ def run_screenshotting(input_files,
     '''
     Main control function for the script
     '''
-    #TODO check input as maf, vcf, txt
-    #TODO support vcf reading
-    #TODO do the read here
+    #TODO Append REF_ALT to output file, this is default 
     if onlysnap is not None:
         batchscript_file = str(onlysnap)
         file_exists(batchscript_file, kill = True)
