@@ -265,7 +265,7 @@ def run_IGV_script(igv_script, igv_jar, memMB, tumorid):
         sp.call([
             'java',
             java_memory,
-            '/igv_snapshot/IGV_2.18.0/igv.sh'
+            igv_jar,
             '-b',
             igv_script
         ])
