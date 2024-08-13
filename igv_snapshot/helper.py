@@ -260,14 +260,12 @@ def run_IGV_script(igv_script, igv_jar, memMB, tumorid):
     igv_args_file = os.getenv("IGV_ARGS_FILE")
 
     with Xvfb(width=1920, height=1080, colordepth=24, nolisten='tcp') as xvfb:
-        xvfb.extra_xvfb_args += ['+extension', 'RANDR', 'c', '20']
+        xvfb.extra_xvfb_args += ['+extension', 'RANDR', 'c', '20', '--auto-servernum', '--server-num=1']
         java_memory = "-Xmx"+memMB+"m"
         sp.call([
-            '/opt/java/openjdk/bin/java',
-            '-showversion',
+            'java',
             java_memory,
-            f"--module-path={igv_lib_dir}", 
-            '--module=org.igv/org.broad.igv.ui.Main',
+            '/igv_snapshot/IGV_2.18.0/igv.sh'
             '-b',
             igv_script
         ])
